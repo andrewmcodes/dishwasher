@@ -1,0 +1,23 @@
+name: StandardRB
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: StandardRB Check Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build and test with Rake
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        bundle exec standardrb --format progress
+    container:
+      image: ruby:2.6.5

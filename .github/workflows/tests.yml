@@ -1,4 +1,4 @@
-name: Test
+name: Tests
 
 on:
   pull_request:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Ruby Test Action
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master

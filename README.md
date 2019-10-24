@@ -1,3 +1,6 @@
+![StandardRB](https://github.com/andrewmcodes/dishwasher/workflows/StandardRB/badge.svg)
+![Tests](https://github.com/andrewmcodes/dishwasher/workflows/Tests/badge.svg)
+
 # Dishwasher
 
 A CLI tool written in Ruby to help you remove unneeded GitHub forks.
