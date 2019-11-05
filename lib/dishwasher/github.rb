@@ -5,9 +5,8 @@ module Dishwasher
     attr_reader :token
 
     def initialize
-      @token = ENV['GITHUB_TOKEN'] || ARGV[0]
+      @token = ENV["GITHUB_TOKEN"] || ARGV[0]
     end
-
 
     #
     # GitHub Client Object
@@ -17,7 +16,6 @@ module Dishwasher
     def client
       @client ||= Octokit::Client.new(access_token: token, per_page: 1000)
     end
-
 
     #
     # Delete passed in repository ID
@@ -36,7 +34,7 @@ module Dishwasher
     # @return [object] repository objects
     #
     def repos
-      client.repos(user: client.user, query: {type: 'owner', sort: 'asc'})
+      client.repos(user: client.user, query: {type: "owner", sort: "asc"})
     end
 
     #
@@ -54,7 +52,7 @@ module Dishwasher
     # @return [hash] key: repo name, value: repo id
     #
     def choices
-      forks.map{ |f| [f[:full_name], f[:id]] }.to_h
+      forks.map { |f| [f[:full_name], f[:id]] }.to_h
     end
   end
 end

@@ -26,7 +26,7 @@ module Dishwasher
     # @return [boolean] T:F depending on selection
     #
     def confirmation_prompt
-      prompt.yes?('Are you sure you want to delete these forked repos?')
+      prompt.yes?("Are you sure you want to delete these forked repos?")
     end
 
     #
