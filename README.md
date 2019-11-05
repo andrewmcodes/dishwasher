@@ -1,4 +1,3 @@
-[![Lines of Code](http://img.shields.io/badge/lines_of_code-7-brightgreen.svg?style=flat)](http://blog.codinghorror.com/the-best-code-is-no-code-at-all/)
 ![StandardRB](https://github.com/andrewmcodes/dishwasher/workflows/StandardRB/badge.svg)
 ![Tests](https://github.com/andrewmcodes/dishwasher/workflows/Tests/badge.svg)
 
@@ -14,7 +13,7 @@ A CLI tool written in Ruby to help you remove unneeded GitHub forks.
 
 ## Usage
 
-TODO
+Update with real documentation...
 
 ## Development
 
