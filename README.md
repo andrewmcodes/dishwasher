@@ -1,3 +1,4 @@
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 ![StandardRB](https://github.com/andrewmcodes/dishwasher/workflows/StandardRB/badge.svg)
 ![Tests](https://github.com/andrewmcodes/dishwasher/workflows/Tests/badge.svg)
 
@@ -38,3 +39,19 @@ Please run `./bin/standardize` prior submitting pull requests.
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.andrewmason.me/"><img src="https://avatars1.githubusercontent.com/u/18423853?v=4" width="100px;" alt="Andrew Mason"/><br /><sub><b>Andrew Mason</b></sub></a><br /><a href="https://github.com/andrewmcodes/dishwasher/commits?author=andrewmcodes" title="Code">💻</a> <a href="https://github.com/andrewmcodes/dishwasher/commits?author=andrewmcodes" title="Documentation">📖</a> <a href="#tool-andrewmcodes" title="Tools">🔧</a> <a href="https://github.com/andrewmcodes/dishwasher/commits?author=andrewmcodes" title="Tests">⚠️</a> <a href="#maintenance-andrewmcodes" title="Maintenance">🚧</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

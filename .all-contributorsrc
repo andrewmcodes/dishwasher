@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "andrewmcodes",
+      "name": "Andrew Mason",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/18423853?v=4",
+      "profile": "https://www.andrewmason.me/",
+      "contributions": [
+        "code",
+        "doc",
+        "tool",
+        "test",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "dishwasher",
+  "projectOwner": "andrewmcodes",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
