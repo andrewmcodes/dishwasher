@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dishwasher (0.0.1)
+    dishwasher (0.0.2)
       artii
       octokit (~> 4.0)
       tty-prompt (~> 0.19)
