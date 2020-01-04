@@ -17,11 +17,21 @@
         "test",
         "maintenance"
       ]
+    },
+    {
+      "login": "krainboltgreene",
+      "name": "Kurtis Rainbolt-Greene",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/334809?v=4",
+      "profile": "https://www.kurtis.rainbolt-greene.online",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "dishwasher",
   "projectOwner": "andrewmcodes",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
