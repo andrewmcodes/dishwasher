@@ -1,34 +1,28 @@
-require "tty-prompt"
-
 module Dishwasher
-  class DeleteForks
-    attr_reader :selections, :github
-
-    def initialize(selections: nil, github: nil)
-      @selections = selections
-      @github = github
-    end
-
-    #
-    # Loop to delete the selected forked repos
-    #
-    # @return [string] confirmation_message
-    #
-    def delete
-      Dishwasher::MessageFormatter.new(title: "Deleting Forks").title_message
-      selections.each do |s|
-        github.delete_repo(s)
+  module DeleteForks
+    class << self
+      include MessageFormatter
+      #
+      # Loop to delete the selected forked repos
+      #
+      # @return [string] confirmation_message
+      #
+      def delete(selections)
+        title_message("Deleting Forks")
+        selections.each do |s|
+          Dishwasher::Github.delete_repo(s)
+        end
+        confirmation_message
       end
-      confirmation_message
-    end
 
-    #
-    # Confirmation message that the repos were removed
-    #
-    # @return [string] forks deleted message
-    #
-    def confirmation_message
-      Dishwasher::MessageFormatter.new(title: "Forks Deleted").title_message
+      #
+      # Confirmation message that the repos were removed
+      #
+      # @return [string] forks deleted message
+      #
+      def confirmation_message
+        title_message("Forks Deleted")
+      end
     end
   end
 end

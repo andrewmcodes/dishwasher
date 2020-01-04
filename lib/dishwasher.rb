@@ -1,14 +1,19 @@
-require "dishwasher/version"
-require "dishwasher/prompt"
+require "artii"
+require "octokit"
+require "tty-prompt"
+
+require "dishwasher/message_formatter"
 require "dishwasher/github"
 require "dishwasher/delete_forks"
-require "dishwasher/message_formatter"
+require "dishwasher/version"
 
 module Dishwasher
-  class Error < StandardError; end
-
-  gh = Dishwasher::Github.new
-  choices = gh.choices
-  cs = Dishwasher::Prompt.new(choices: choices).confirmed_selections
-  Dishwasher::DeleteForks.new(selections: cs, github: gh).delete
+  class << self
+    def start
+      puts Artii::Base.new.asciify("Dishwasher")
+      cs = Dishwasher::Github.confirmed_selections
+      Dishwasher::DeleteForks.delete(cs)
+      true
+    end
+  end
 end

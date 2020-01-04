@@ -1,4 +1,7 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in dishwasher.gemspec
 gemspec
+
+group :test do
+  gem "minitest", "~> 5.13.0"
+end
