@@ -14,7 +14,7 @@ A CLI tool written in Ruby to help you remove unneeded GitHub forks.
 
 ## Usage
 
-[![asciicast](https://asciinema.org/a/2NG8eSXJyiVGxAJcBPhUG8GN6.svg)](https://asciinema.org/a/2NG8eSXJyiVGxAJcBPhUG8GN6)
+[![asciicast](https://asciinema.org/a/311548.svg)](https://asciinema.org/a/311548)
 
 ## Development
 
