@@ -1,9 +1,14 @@
 module Dishwasher
+  #
+  # Provides message formatting utilities for consistent output
+  #
   module MessageFormatter
     #
     # Title message formatter
     #
-    # @return [string] formatted title string
+    # @param message [String] the message to format
+    #
+    # @return [void] prints the formatted title string
     #
     def title_message(message)
       puts "\n==== #{message} ====\n"
@@ -12,7 +17,9 @@ module Dishwasher
     #
     # Abort message formatter
     #
-    # @return [string] formatted abort string
+    # @param message [String] the message to format
+    #
+    # @return [void] aborts the program with the formatted string
     #
     def abort_message(message)
       abort "\n==== #{message} ====\n"
@@ -21,7 +28,9 @@ module Dishwasher
     #
     # Body message formatter
     #
-    # @return [string] formatted body string
+    # @param message [String] the message to format
+    #
+    # @return [void] prints the formatted body string
     #
     def body_message(message)
       puts "\n#{message}\n"

@@ -1,4 +1,9 @@
 module Dishwasher
+  #
+  # Provides GitHub integration for listing and deleting forked repositories
+  #
+  # Supports both GitHub CLI (gh) and Octokit API for repository operations
+  #
   module Github
     class << self
       include MessageFormatter
@@ -35,7 +40,7 @@ module Dishwasher
       #
       # Initialize new TTY Prompt
       #
-      # @return [object] TTY::Prompt
+      # @return [TTY::Prompt] a new or memoized TTY::Prompt instance
       #
       def prompt
         @prompt ||= TTY::Prompt.new
@@ -44,7 +49,7 @@ module Dishwasher
       #
       # Get GitHub Access Token so we can authenticate with GitHub's API
       #
-      # @return [string] GitHub Access Token
+      # @return [String] GitHub Access Token
       #
       def token
         @token ||= prompt.mask(title_message("What is your GitHub Personal Access Token?"), default: ENV["GITHUB_ACCESS_TOKEN"])
@@ -53,7 +58,7 @@ module Dishwasher
       #
       # GitHub Client Object (only used if gh CLI is not available)
       #
-      # @return [object] GitHub Client Object
+      # @return [Octokit::Client] GitHub client instance
       #
       def client
         require "octokit"
@@ -63,7 +68,7 @@ module Dishwasher
       #
       # Delete passed in repository
       #
-      # @param [string] repo_name repository name (e.g., "owner/repo")
+      # @param repo_name [String] repository name (e.g., "owner/repo")
       #
       # @return [Boolean] success or failure
       #
@@ -78,7 +83,7 @@ module Dishwasher
       #
       # Repositories for the authenticated user
       #
-      # @return [array] repository objects
+      # @return [Array] repository objects
       #
       def repos
         if gh_cli_available?
@@ -91,7 +96,7 @@ module Dishwasher
       #
       # Get repositories using gh CLI
       #
-      # @return [array] repository data
+      # @return [Array<Hash>] repository data
       # @raise [RuntimeError] if gh command fails or returns invalid JSON
       #
       def repos_from_gh_cli
@@ -124,7 +129,7 @@ module Dishwasher
       #
       # Get repositories using Octokit API
       #
-      # @return [array] repository data
+      # @return [Array] repository data
       #
       def repos_from_api
         client.repos(user: client.user, query: {type: "owner", sort: "asc"})
@@ -133,7 +138,7 @@ module Dishwasher
       #
       # All forked repositories for the client
       #
-      # @return [array] all forked repositories
+      # @return [Array] all forked repositories
       #
       def forks
         if gh_cli_available?
@@ -146,7 +151,7 @@ module Dishwasher
       #
       # Potential choices to choose from for deletion
       #
-      # @return [hash] key: repo name, value: repo identifier
+      # @return [Hash] key: repo name, value: repo identifier
       #
       def choices
         if gh_cli_available?
@@ -159,7 +164,7 @@ module Dishwasher
       #
       # Selected forks for deletion
       #
-      # @return [array] array of repo identifiers
+      # @return [Array] array of repo identifiers
       #
       def confirmed_selections
         selections = selection(choices)
@@ -170,7 +175,7 @@ module Dishwasher
       #
       # Prompt to confirm deletion of repos
       #
-      # @return [boolean] T:F depending on selection
+      # @return [Boolean] true/false depending on selection
       #
       def confirmation_prompt
         title_message("Are you sure you want to delete these forked repos?")
@@ -180,7 +185,9 @@ module Dishwasher
       #
       # Array of selected identifiers
       #
-      # @return [array] repo identifiers chosen for deletion
+      # @param c [Hash] choices hash with repo names as keys and values
+      #
+      # @return [Array] repo identifiers chosen for deletion
       #
       def selection(c)
         prompt.multi_select(title_message("Select forks to delete"), c)
@@ -189,7 +196,7 @@ module Dishwasher
       #
       # No selection message
       #
-      # @return [string] message indicating no selections were made
+      # @return [void] aborts the program with a message
       #
       def no_selections
         abort_message("No selections were made.")
@@ -198,7 +205,7 @@ module Dishwasher
       #
       # Canceled message
       #
-      # @return [string] message indicating the operation was canceled
+      # @return [void] aborts the program with a message
       #
       def canceled_message
         abort_message("Operation canceled by user.")
