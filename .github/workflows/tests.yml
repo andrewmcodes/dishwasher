@@ -8,16 +8,19 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
-  build:
-    name: Ruby Test Action
+  test:
+    name: Ruby 3.3 Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Build and test with Rake
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-        bundle exec rake test
-    container:
-      image: ruby:2.6.5
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.267.0
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rspec
