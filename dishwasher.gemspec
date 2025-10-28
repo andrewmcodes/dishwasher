@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
 
   # Dependencies
   spec.add_dependency "artii"
-  spec.add_dependency "octokit", "~> 9.0"
+  spec.add_dependency "octokit", ">= 9", "< 11"
   spec.add_dependency "tty-prompt", "~> 0.23"
 
   # Development Dependencies
