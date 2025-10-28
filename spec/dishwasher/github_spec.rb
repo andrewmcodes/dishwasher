@@ -159,11 +159,11 @@ RSpec.describe Dishwasher::Github do
     end
 
     before do
-      allow(described_class).to receive(:`).with("gh repo list --json name,nameWithOwner,isFork,owner --limit 1000").and_return(gh_output)
+      allow(described_class).to receive(:run_gh_list_repos).and_return(gh_output)
     end
 
-    it "executes gh CLI command" do
-      expect(described_class).to receive(:`).with("gh repo list --json name,nameWithOwner,isFork,owner --limit 1000")
+    it "calls run_gh_list_repos to get data" do
+      expect(described_class).to receive(:run_gh_list_repos)
       described_class.repos_from_gh_cli
     end
 
@@ -173,6 +173,19 @@ RSpec.describe Dishwasher::Github do
       expect(result.first).to have_key(:name)
       expect(result.first).to have_key(:nameWithOwner)
       expect(result.first).to have_key(:isFork)
+    end
+
+    context "when JSON parsing fails" do
+      before do
+        allow(described_class).to receive(:run_gh_list_repos).and_return("invalid json")
+      end
+
+      it "raises an error with helpful message" do
+        expect { described_class.repos_from_gh_cli }.to raise_error(
+          RuntimeError,
+          /Failed to parse GitHub CLI output/
+        )
+      end
     end
   end
 

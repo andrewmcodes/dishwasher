@@ -92,11 +92,33 @@ module Dishwasher
       # Get repositories using gh CLI
       #
       # @return [array] repository data
+      # @raise [RuntimeError] if gh command fails or returns invalid JSON
       #
       def repos_from_gh_cli
         require "json"
+        output = run_gh_list_repos
+
+        begin
+          JSON.parse(output, symbolize_names: true)
+        rescue JSON::ParserError => e
+          raise "Failed to parse GitHub CLI output: #{e.message}"
+        end
+      end
+
+      #
+      # Run gh CLI command to list repos
+      #
+      # @return [String] command output
+      # @raise [RuntimeError] if command fails
+      #
+      def run_gh_list_repos
         output = `gh repo list --json name,nameWithOwner,isFork,owner --limit 1000`
-        JSON.parse(output, symbolize_names: true)
+
+        unless $?.success?
+          raise "GitHub CLI command failed. Make sure 'gh' is installed and authenticated."
+        end
+
+        output
       end
 
       #
