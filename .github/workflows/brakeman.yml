@@ -29,10 +29,12 @@ jobs:
           bundler-cache: true
       
       - name: Install Brakeman
-        run: gem install brakeman
+        run: gem install brakeman -v 7.1.0
       
       - name: Run Brakeman scan
-        run: brakeman --force --format sarif --output brakeman-results.sarif --no-pager || true
+        run: |
+          brakeman --force --format sarif --output brakeman-results.sarif --no-pager
+        continue-on-error: true
       
       - name: Upload Brakeman SARIF results to CodeQL
         uses: github/codeql-action/upload-sarif@v3
