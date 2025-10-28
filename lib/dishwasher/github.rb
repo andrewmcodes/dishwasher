@@ -120,7 +120,7 @@ module Dishwasher
         output = `gh repo list --json name,nameWithOwner,isFork,owner --limit 1000`
         status = $?
 
-        unless status && status.success?
+        unless status&.success?
           raise "GitHub CLI command failed. Make sure 'gh' is installed and authenticated."
         end
 

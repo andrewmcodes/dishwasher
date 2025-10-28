@@ -1,0 +1,40 @@
+name: Steep Type Checking
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  steep:
+    name: Steep Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.267.0
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Run Steep
+        run: |
+          # Run steep and check for errors (not warnings)
+          # Steep exits with 1 if there are warnings or errors
+          # We'll check the output to distinguish
+          output=$(bundle exec steep check 2>&1)
+          echo "$output"
+          
+          # Check if there are any [error] messages
+          if echo "$output" | grep -q '\[error\]'; then
+            echo "Type errors found!"
+            exit 1
+          fi
+          
+          echo "Type checking passed (warnings are acceptable for external dependencies)"
+          exit 0

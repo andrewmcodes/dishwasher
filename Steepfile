@@ -7,10 +7,9 @@ target :lib do
 
   # Standard libraries
   library "json"
-  
+
   # Gems - we won't add them as they don't have RBS signatures
   # library "artii"
   # library "octokit"
   # library "tty-prompt"
 end
-
