@@ -2,6 +2,36 @@ module Dishwasher
   module Github
     class << self
       include MessageFormatter
+
+      #
+      # Check if gh CLI is installed
+      #
+      # @return [Boolean] true if gh is installed and authenticated
+      #
+      def gh_cli_available?
+        return @gh_cli_available unless @gh_cli_available.nil?
+
+        @gh_cli_available = gh_version_check && gh_auth_check
+      end
+
+      #
+      # Check if gh CLI is installed by running version command
+      #
+      # @return [Boolean] true if gh --version succeeds
+      #
+      def gh_version_check
+        system("gh --version > /dev/null 2>&1")
+      end
+
+      #
+      # Check if gh CLI is authenticated
+      #
+      # @return [Boolean] true if gh auth status succeeds
+      #
+      def gh_auth_check
+        system("gh auth status > /dev/null 2>&1")
+      end
+
       #
       # Initialize new TTY Prompt
       #
@@ -21,56 +51,93 @@ module Dishwasher
       end
 
       #
-      # GitHub Client Object
+      # GitHub Client Object (only used if gh CLI is not available)
       #
       # @return [object] GitHub Client Object
       #
       def client
+        require "octokit"
         @client ||= Octokit::Client.new(access_token: token, per_page: 1000)
       end
 
       #
-      # Delete passed in repository ID
+      # Delete passed in repository
       #
-      # @param [int] r repository ID
+      # @param [string] repo_name repository name (e.g., "owner/repo")
       #
       # @return [Boolean] success or failure
       #
-      def delete_repo(r)
-        client.delete_repository(r)
+      def delete_repo(repo_name)
+        if gh_cli_available?
+          system("gh repo delete #{repo_name} --yes")
+        else
+          client.delete_repository(repo_name)
+        end
       end
 
       #
-      # Repositories for the client object
+      # Repositories for the authenticated user
       #
-      # @return [object] repository objects
+      # @return [array] repository objects
       #
       def repos
+        if gh_cli_available?
+          repos_from_gh_cli
+        else
+          repos_from_api
+        end
+      end
+
+      #
+      # Get repositories using gh CLI
+      #
+      # @return [array] repository data
+      #
+      def repos_from_gh_cli
+        require "json"
+        output = `gh repo list --json name,nameWithOwner,isFork,owner --limit 1000`
+        JSON.parse(output, symbolize_names: true)
+      end
+
+      #
+      # Get repositories using Octokit API
+      #
+      # @return [array] repository data
+      #
+      def repos_from_api
         client.repos(user: client.user, query: {type: "owner", sort: "asc"})
       end
 
       #
       # All forked repositories for the client
       #
-      # @return [object] all forked repositories for the client
+      # @return [array] all forked repositories
       #
       def forks
-        repos.select { |hash| hash[:fork] == true }
+        if gh_cli_available?
+          repos.select { |hash| hash[:isFork] == true }
+        else
+          repos.select { |hash| hash[:fork] == true }
+        end
       end
 
       #
       # Potential choices to choose from for deletion
       #
-      # @return [hash] key: repo name, value: repo id
+      # @return [hash] key: repo name, value: repo identifier
       #
       def choices
-        forks.map { |f| [f[:full_name], f[:id]] }.to_h
+        if gh_cli_available?
+          forks.map { |f| [f[:nameWithOwner], f[:nameWithOwner]] }.to_h
+        else
+          forks.map { |f| [f[:full_name], f[:full_name]] }.to_h
+        end
       end
 
       #
       # Selected forks for deletion
       #
-      # @return [array] array of repo id's
+      # @return [array] array of repo identifiers
       #
       def confirmed_selections
         selections = selection(choices)
@@ -89,9 +156,9 @@ module Dishwasher
       end
 
       #
-      # Array of selected id's
+      # Array of selected identifiers
       #
-      # @return [array] repo id's chosen for deletion
+      # @return [array] repo identifiers chosen for deletion
       #
       def selection(c)
         prompt.multi_select(title_message("Select forks to delete"), c)

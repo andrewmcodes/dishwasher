@@ -2,6 +2,7 @@ module Dishwasher
   module DeleteForks
     class << self
       include MessageFormatter
+
       #
       # Loop to delete the selected forked repos
       #
