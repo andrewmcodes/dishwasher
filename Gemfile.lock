@@ -121,5 +121,8 @@ DEPENDENCIES
   rspec (~> 3.13)
   standard
 
+RUBY VERSION
+   ruby 3.2.3p157
+
 BUNDLED WITH
    2.7.2
