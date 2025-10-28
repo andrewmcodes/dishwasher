@@ -69,7 +69,8 @@ module Dishwasher
       #
       def delete_repo(repo_name)
         if gh_cli_available?
-          system("gh repo delete #{repo_name} --yes")
+          require "shellwords"
+          system("gh", "repo", "delete", repo_name, "--yes")
         else
           client.delete_repository(repo_name)
         end

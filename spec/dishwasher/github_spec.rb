@@ -306,8 +306,8 @@ RSpec.describe Dishwasher::Github do
         allow(described_class).to receive(:system).and_return(true)
       end
 
-      it "deletes the repo using gh CLI" do
-        expect(described_class).to receive(:system).with("gh repo delete user/repo --yes")
+      it "deletes the repo using gh CLI with proper argument separation" do
+        expect(described_class).to receive(:system).with("gh", "repo", "delete", "user/repo", "--yes")
         described_class.delete_repo("user/repo")
       end
 
