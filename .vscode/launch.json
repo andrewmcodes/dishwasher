@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "ruby_lsp",
+      "request": "launch",
+      "name": "Debug: Dishwasher CLI",
+      "program": "${workspaceFolder}/exe/dishwasher",
+      "env": {
+        "GITHUB_ACCESS_TOKEN": "${env:GITHUB_ACCESS_TOKEN}"
+      }
+    },
+    {
+      "type": "ruby_lsp",
+      "request": "launch",
+      "name": "Debug: RSpec - Current File",
+      "program": "bundle exec rspec ${relativeFile}"
+    },
+    {
+      "type": "ruby_lsp",
+      "request": "launch",
+      "name": "Debug: RSpec - All Tests",
+      "program": "bundle exec rspec"
+    },
+    {
+      "type": "ruby_lsp",
+      "request": "attach",
+      "name": "Attach to Debugger",
+      "localfsRoot": "${workspaceFolder}",
+      "remoteHost": "127.0.0.1",
+      "remotePort": "1234",
+      "remoteWorkspaceRoot": "${workspaceFolder}"
+    }
+  ]
+}
