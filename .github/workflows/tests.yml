@@ -20,6 +20,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.267.0
         with:
+          ruby-version: '3.3'
           bundler-cache: true
       - name: Run tests
         run: bundle exec rspec
