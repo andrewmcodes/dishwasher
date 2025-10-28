@@ -4,6 +4,9 @@ gemspec
 
 group :development do
   gem "debug"
+end
+
+group :development, :test do
   gem "standard"
 end
 
