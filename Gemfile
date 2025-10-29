@@ -8,6 +8,8 @@ end
 
 group :development, :test do
   gem "standard"
+  gem "sord"
+  gem "steep"
 end
 
 group :test do

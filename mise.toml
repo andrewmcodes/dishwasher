@@ -1,2 +1,14 @@
 [tools]
 ruby = "3.3.6"
+
+[tasks.steep]
+description = "Run Steep type checker"
+run = "bundle exec steep check"
+
+[tasks.test]
+description = "Run RSpec tests"
+run = "bundle exec rspec"
+
+[tasks.lint]
+description = "Run StandardRB linter"
+run = "bundle exec standardrb"

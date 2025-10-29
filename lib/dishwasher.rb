@@ -9,6 +9,14 @@ require "dishwasher/version"
 
 module Dishwasher
   class << self
+    #
+    # Start the Dishwasher application
+    #
+    # Displays ASCII art title, prompts user to select forks for deletion,
+    # and deletes the selected repositories
+    #
+    # @return [Boolean] true when operation completes successfully
+    #
     def start
       puts Artii::Base.new.asciify("Dishwasher")
       cs = Dishwasher::Github.confirmed_selections

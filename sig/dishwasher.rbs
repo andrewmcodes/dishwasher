@@ -1,0 +1,200 @@
+# 
+# Dishwasher namespace module
+module Dishwasher
+  VERSION: String
+
+  # Start the Dishwasher application
+  # 
+  # Displays ASCII art title, prompts user to select forks for deletion,
+  # and deletes the selected repositories
+  # 
+  # _@return_ — true when operation completes successfully
+  def self.start: () -> bool
+
+  # 
+  # Provides GitHub integration for listing and deleting forked repositories
+  # 
+  # Supports both GitHub CLI (gh) and Octokit API for repository operations
+  module Github
+    extend Dishwasher::MessageFormatter
+
+    # Check if gh CLI is installed
+    # 
+    # _@return_ — true if gh is installed and authenticated
+    def self.gh_cli_available?: () -> (bool | nil)
+
+    # Check if gh CLI is installed by running version command
+    # 
+    # _@return_ — true if gh --version succeeds
+    def self.gh_version_check: () -> (bool | nil)
+
+    # Check if gh CLI is authenticated
+    # 
+    # _@return_ — true if gh auth status succeeds
+    def self.gh_auth_check: () -> (bool | nil)
+
+    # Initialize new TTY Prompt
+    # 
+    # _@return_ — a new or memoized TTY::Prompt instance
+    def self.prompt: () -> untyped
+
+    # Get GitHub Access Token so we can authenticate with GitHub's API
+    # 
+    # _@return_ — GitHub Access Token
+    def self.token: () -> String
+
+    # GitHub Client Object (only used if gh CLI is not available)
+    # 
+    # _@return_ — GitHub client instance
+    def self.client: () -> untyped
+
+    # Delete passed in repository
+    # 
+    # _@param_ `repo_name` — repository name (e.g., "owner/repo")
+    # 
+    # _@return_ — success or failure
+    def self.delete_repo: (String repo_name) -> (bool | nil | untyped)
+
+    # Repositories for the authenticated user
+    # 
+    # _@return_ — repository objects
+    def self.repos: () -> ::Array[untyped]
+
+    # Get repositories using gh CLI
+    # 
+    # _@return_ — repository data
+    def self.repos_from_gh_cli: () -> ::Array[::Hash[untyped, untyped]]
+
+    # Run gh CLI command to list repos
+    # 
+    # _@return_ — command output
+    def self.run_gh_list_repos: () -> String
+
+    # Get repositories using Octokit API
+    # 
+    # _@return_ — repository data
+    def self.repos_from_api: () -> ::Array[untyped]
+
+    # All forked repositories for the client
+    # 
+    # _@return_ — all forked repositories
+    def self.forks: () -> ::Array[untyped]
+
+    # Potential choices to choose from for deletion
+    # 
+    # _@return_ — key: repo name, value: repo identifier
+    def self.choices: () -> ::Hash[untyped, untyped]
+
+    # Selected forks for deletion
+    # 
+    # _@return_ — array of repo identifiers
+    def self.confirmed_selections: () -> ::Array[untyped]
+
+    # Prompt to confirm deletion of repos
+    # 
+    # _@return_ — true/false depending on selection
+    def self.confirmation_prompt: () -> bool
+
+    # Array of selected identifiers
+    # 
+    # _@param_ `c` — choices hash with repo names as keys and values
+    # 
+    # _@return_ — repo identifiers chosen for deletion
+    def self.selection: (::Hash[untyped, untyped] c) -> ::Array[untyped]
+
+    # No selection message
+    # 
+    # _@return_ — aborts the program with a message
+    def self.no_selections: () -> bot
+
+    # Canceled message
+    # 
+    # _@return_ — aborts the program with a message
+    def self.canceled_message: () -> bot
+
+    # Title message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted title string
+    def self.title_message: (String message) -> void
+
+    # Abort message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — aborts the program with the formatted string
+    def self.abort_message: (String message) -> bot
+
+    # Body message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted body string
+    def self.body_message: (String message) -> void
+  end
+
+  # 
+  # Handles deletion of selected forked repositories
+  module DeleteForks
+    extend Dishwasher::MessageFormatter
+
+    # Loop to delete the selected forked repos
+    # 
+    # _@param_ `selections` — array of repository names to delete
+    # 
+    # _@return_ — prints confirmation message when complete
+    def self.delete: (::Array[String] selections) -> void
+
+    # Confirmation message that the repos were removed
+    # 
+    # _@return_ — prints a title message
+    def self.confirmation_message: () -> void
+
+    # Title message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted title string
+    def self.title_message: (String message) -> void
+
+    # Abort message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — aborts the program with the formatted string
+    def self.abort_message: (String message) -> bot
+
+    # Body message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted body string
+    def self.body_message: (String message) -> void
+  end
+
+  # 
+  # Provides message formatting utilities for consistent output
+  module MessageFormatter
+    # Title message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted title string
+    def title_message: (String message) -> void
+
+    # Abort message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — aborts the program with the formatted string
+    def abort_message: (String message) -> bot
+
+    # Body message formatter
+    # 
+    # _@param_ `message` — the message to format
+    # 
+    # _@return_ — prints the formatted body string
+    def body_message: (String message) -> void
+  end
+end

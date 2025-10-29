@@ -1,4 +1,7 @@
 module Dishwasher
+  #
+  # Handles deletion of selected forked repositories
+  #
   module DeleteForks
     class << self
       include MessageFormatter
@@ -6,7 +9,9 @@ module Dishwasher
       #
       # Loop to delete the selected forked repos
       #
-      # @return [string] confirmation_message
+      # @param selections [Array<String>] array of repository names to delete
+      #
+      # @return [void] prints confirmation message when complete
       #
       def delete(selections)
         title_message("Deleting Forks")
@@ -19,7 +24,7 @@ module Dishwasher
       #
       # Confirmation message that the repos were removed
       #
-      # @return [string] forks deleted message
+      # @return [void] prints a title message
       #
       def confirmation_message
         title_message("Forks Deleted")
