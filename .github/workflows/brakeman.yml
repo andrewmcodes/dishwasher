@@ -21,21 +21,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1.267.0
         with:
-          ruby-version: '3.3'
           bundler-cache: true
-      
+
       - name: Install Brakeman
         run: gem install brakeman -v 7.1.0
-      
+
       - name: Run Brakeman scan
         run: |
           brakeman --force --format sarif --output brakeman-results.sarif --no-pager
         continue-on-error: true
-      
+
       - name: Upload Brakeman SARIF results to CodeQL
         uses: github/codeql-action/upload-sarif@v3
         with:
