@@ -85,7 +85,7 @@ RSpec.describe Dishwasher::Github do
     it "prompts for a GitHub token" do
       expect(prompt_double).to receive(:mask).with(
         nil,
-        default: ENV["GITHUB_ACCESS_TOKEN"]
+        default: ENV["GH_TOKEN"]
       )
       described_class.token
     end
@@ -100,13 +100,13 @@ RSpec.describe Dishwasher::Github do
       expect(first).to equal(second)
     end
 
-    context "when GITHUB_ACCESS_TOKEN env var is set" do
+    context "when GH_TOKEN env var is set" do
       before do
-        ENV["GITHUB_ACCESS_TOKEN"] = "env_token"
+        ENV["GH_TOKEN"] = "env_token"
       end
 
       after do
-        ENV.delete("GITHUB_ACCESS_TOKEN")
+        ENV.delete("GH_TOKEN")
       end
 
       it "uses it as the default" do
