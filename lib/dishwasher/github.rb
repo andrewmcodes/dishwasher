@@ -34,6 +34,7 @@ module Dishwasher
       # @return [Boolean] true if gh auth status succeeds
       #
       def gh_auth_check
+        # TODO: do we need to run `gh auth login` here?
         system("gh auth status > /dev/null 2>&1")
       end
 
@@ -52,7 +53,7 @@ module Dishwasher
       # @return [String] GitHub Access Token
       #
       def token
-        @token ||= prompt.mask(title_message("What is your GitHub Personal Access Token?"), default: ENV["GITHUB_ACCESS_TOKEN"])
+        @token ||= prompt.mask(title_message("What is your GitHub Personal Access Token?"), default: ENV.fetch("GH_TOKEN", ""))
       end
 
       #
@@ -117,7 +118,7 @@ module Dishwasher
       # @raise [RuntimeError] if command fails
       #
       def run_gh_list_repos
-        output = `gh repo list --json name,nameWithOwner,isFork,owner --limit 1000`
+        output = `gh repo list --json name,nameWithOwner,isFork,owner --limit 10`
         status = $?
 
         unless status&.success?

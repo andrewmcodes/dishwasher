@@ -7,7 +7,7 @@
       "name": "Debug: Dishwasher CLI",
       "program": "${workspaceFolder}/exe/dishwasher",
       "env": {
-        "GITHUB_ACCESS_TOKEN": "${env:GITHUB_ACCESS_TOKEN}"
+        "GH_TOKEN": "${env:GH_TOKEN}"
       }
     },
     {

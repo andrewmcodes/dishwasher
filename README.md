@@ -43,7 +43,7 @@ dishwasher
 You can also set the token as an environment variable:
 
 ```sh
-export GITHUB_ACCESS_TOKEN=your_token_here
+export GH_TOKEN=your_token_here
 dishwasher
 ```
 
